@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             display: flex;
@@ -17,7 +18,7 @@
         }
         h1 {
             font-size: 3em;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
             -webkit-background-clip: text;
             color: transparent;
             text-align: center;
@@ -39,13 +40,74 @@
         .buttons button:hover {
             background-color: #feb47b;
         }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            padding: 40px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b, #12c2e9, #c471ed, #f64f59);
+            background-size: 400% 400%;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 1.5em;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .popup.active {
+            display: flex;
+        }
+
+        .neon-text {
+            font-size: 2em;
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 60px #ff00ff, 0 0 70px #ff00ff;
+        }
+
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.buttons button');
+            const popup = document.querySelector('.popup');
+
+            buttons.forEach(button => {
+                button.addEventListener('mouseover', () => {
+                    buttons.forEach(btn => {
+                        if (btn !== button) {
+                            btn.innerHTML = '<i class="fas fa-thumbs-down"></i> Không';
+                        } else {
+                            btn.innerHTML = '<i class="fas fa-thumbs-up"></i> Có';
+                        }
+                    });
+                });
+
+                button.addEventListener('click', () => {
+                    if (button.innerHTML.includes('Có')) {
+                        popup.classList.add('active');
+                        setTimeout(() => {
+                            popup.classList.remove('active');
+                        }, 5000);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-    <h1>Bạn có thấy mình vừa đẹp trai vừa giỏi không 😂?</h1>
+    <h1>Bạn có thấy mình vừa giỏi vừa đẹp trai không <i class="fas fa-thumbs-up"></i>?</h1>
     <div class="buttons">
-        <button>Có</button>
-        <button>Không</button>
+        <button><i class="fas fa-thumbs-up"></i> Có</button>
+        <button><i class="fas fa-thumbs-down"></i> Không</button>
+    </div>
+    <div class="popup">
+        <div class="neon-text">Cảm ơn bạn đã đánh giá</div>
     </div>
 </body>
 </html>
